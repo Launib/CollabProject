@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Typography } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NavBar from './navBar/nav';
+import Events from './pages/Events';
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Typography variant="h4">Welcome To</Typography>
+            <Typography variant="h1">Collab</Typography>
+            <Typography variant="h6">A collaborative platform allowing students and organizations to collaborate through events right on your campus!</Typography>
+          </>
+        } />
+        <Route path="/events" element={<Events />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App
+
+// const COLORS = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+
+// export const AuroraHero = () => {
+//   const color = useMotionValue(COLORS[0]);
+//   const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
+
+//   return (
+//     <motion.section
+//       style={{
+//         backgroundImage,
+//       }}
+//       className="relative grid min-h-screen place-content-center overflow-hidden bg-gray-950 px-4 py-24 text-gray-200"
+//     ></motion.section>
+//   );
+// };
