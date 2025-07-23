@@ -1,7 +1,25 @@
 import React from "react";
-import { Typography, Box, Tabs, Tab, Button } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Tabs,
+  Tab,
+  Button,
+  Stack,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+} from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 const Events = (loggedInUser) => {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const [selectedEvent, setSelectedEvent] = React.useState(null);
+  const [reminderDate, setReminderDate] = React.useState(null);
   const eventTabs = loggedInUser
     ? [
         { label: "Past Events", value: "past" },
@@ -101,13 +119,28 @@ const Events = (loggedInUser) => {
       {selectedTab === "upcoming" && (
         <Box mt={3}>
           {upcomingEvents.map((event, idx) => (
-            <Box
+            <Button
               key={idx}
-              mb={2}
-              p={2}
-              border={1}
-              borderRadius={2}
-              borderColor="#ff66c4"
+              onClick={() => {
+                setSelectedEvent(event);
+                setModalOpen(true);
+              }}
+              sx={{
+                width: "100%",
+                textAlign: "left",
+                mb: 2,
+                p: 2,
+                border: "1px solid #ff66c4",
+                borderRadius: 2,
+                color: "black",
+                backgroundColor: "transparent",
+                boxShadow: 1,
+                "&:hover": {
+                  backgroundColor: "#ffe6f2",
+                  borderColor: "#ff66c4",
+                },
+                display: "block",
+              }}
             >
               <Typography fontWeight={600} color="#ff66c4">
                 {event.title}
@@ -115,10 +148,70 @@ const Events = (loggedInUser) => {
               <Typography variant="body2">Date: {event.date}</Typography>
               <Typography variant="body2">{event.description}</Typography>
               <Typography variant="caption">By: {event.by}</Typography>
-            </Box>
+            </Button>
           ))}
         </Box>
       )}
+      {/* Event Registration Modal */}
+      <Dialog
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        sx={{
+          "& .MuiDialog-paper": {
+            p: 2,
+            borderRadius: "3rem",
+            background: "radial-gradient(at right, #fff7ad, #ffa9f9)",
+          },
+        }}
+      >
+        <DialogTitle>Event Registration</DialogTitle>
+        <DialogContent>
+          {selectedEvent && (
+            <Stack direction="column" spacing={2}>
+              <Typography fontWeight={600} mb={1}>
+                {selectedEvent.title}
+              </Typography>
+              <Typography variant="body2" mb={1}>
+                Date: {selectedEvent.date}
+              </Typography>
+              <Typography variant="body2" mb={1}>
+                {selectedEvent.description}
+              </Typography>
+              <Typography variant="caption" mb={2}>
+                By: {selectedEvent.by}
+              </Typography>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  label="Select a date to be reminded"
+                  value={reminderDate}
+                  onChange={(newValue) => setReminderDate(newValue)}
+                  renderInput={(params) => (
+                    <TextField {...params} fullWidth sx={{ mt: 2 }} />
+                  )}
+                />
+              </LocalizationProvider>
+            </Stack>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setModalOpen(false);
+              setReminderDate(null);
+            }}
+            variant="contained"
+            color="primary"
+            disabled={!reminderDate}
+          >
+            Register & Set Reminder
+          </Button>
+          <Button onClick={() => setModalOpen(false)} color="secondary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
       {loggedInUser && selectedTab === "past" && (
         <Box mt={3}>
           {pastEvets.map((event, idx) => (
@@ -151,15 +244,24 @@ const Events = (loggedInUser) => {
             </Typography>
           </Box>
         ) : (
-          <Box mt={3}>
+          <Stack direction="column" mt={3} spacing={2}>
             <Typography variant="h6" gutterBottom>
               My Events
             </Typography>
             <Typography variant="body2">
               You have not created or registered for any events yet.
             </Typography>
-            <Button sx={{borderRadius:"3rem", border: "1px solid black" }}>Create an Event</Button>
-          </Box>
+            <Button
+              mt={2}
+              sx={{
+                borderRadius: "3rem",
+                border: "1px solid black",
+                color: "black",
+              }}
+            >
+              Create an Event
+            </Button>
+          </Stack>
         )
       ) : null}
       {!loggedInUser && eventTabs.length === 1 && (
