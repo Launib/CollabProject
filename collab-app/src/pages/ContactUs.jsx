@@ -24,8 +24,8 @@ const ContactUs = () => {
 
   return (
     <FormControl>
-      <Typography variant="h4">Contact Us</Typography>
-      <Typography variant="body1">
+      <Typography variant="h4" color="black">Contact Us</Typography>
+      <Typography variant="body1" color="black">
         We would love to hear from you! If you have any questions, suggestions,
         or feedback, please feel free to reach out to us.
       </Typography>

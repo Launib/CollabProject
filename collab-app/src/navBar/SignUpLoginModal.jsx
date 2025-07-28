@@ -279,7 +279,12 @@ const SignUpLoginModal = ({
             />
             <Typography sx={{ fontSize: "0.9rem" }}>
               {" "}
-              Already Have An Account? <Button> Sign In</Button>
+              Already Have An Account? <Button onClick={() => {
+                setSignUp(false);
+                setLogin(true);
+                setCreatorAccount(false);
+                setStudentAccount(false);
+              }}> Sign In</Button>
             </Typography>
           </Stack>
         </>
@@ -354,7 +359,12 @@ const SignUpLoginModal = ({
 
             <Typography sx={{ fontSize: "0.9rem" }}>
               {" "}
-              Already Have An Account? <Button> Sign In</Button>
+              Already Have An Account? <Button onClick={() => {
+                setSignUp(false);
+                setLogin(true);
+                setCreatorAccount(false);
+                setStudentAccount(false);
+              }}> Sign In</Button>
             </Typography>
           </Stack>
         </>
