@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import SignUpLoginModal from "./SignUpLoginModal";
+import collabLogo from "../assets/collab.logo-1REAL.png";
 
 const NavBar = () => {
   const pages = [
@@ -38,24 +39,28 @@ const NavBar = () => {
     <AppBar sx={{ backgroundColor: "transparent", boxShadow: "none" }}>
       <Container>
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            color="black"
-            mr={12}
+          <Box
             component={RouterLink}
             to="/"
             sx={{
-              color: "black",
+              mr: 12,
               textDecoration: "none",
               cursor: "pointer",
               "&:hover": {
                 backgroundColor: "transparent",
-                color: "black",
               },
             }}
           >
-            Collab
-          </Typography>
+            <img 
+              src={collabLogo} 
+              alt="Collab Logo" 
+              style={{ 
+                height: '40px', 
+                width: 'auto',
+                display: 'block'
+              }} 
+            />
+          </Box>
           <Box sx={{ display: "flex", gap: 2 }}>
             {pages.map((page) => (
               <Button

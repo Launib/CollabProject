@@ -92,7 +92,7 @@ const Events = (loggedInUser) => {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" color="black" gutterBottom>
         Events
       </Typography>
       <Tabs
