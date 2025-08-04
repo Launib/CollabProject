@@ -15,8 +15,10 @@ import {
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import CreateEventModal from "./CreateEventModal";
 
 const Events = (loggedInUser) => {
+  const [open, setOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
   const [selectedEvent, setSelectedEvent] = React.useState(null);
   const [reminderDate, setReminderDate] = React.useState(null);
@@ -28,7 +30,7 @@ const Events = (loggedInUser) => {
       ]
     : [{ label: "Upcoming Events", value: "upcoming" }];
 
-  const upcomingEvents = [
+  const [upcomingEvents, setUpcomingEvents] = React.useState([
     {
       title: "Hackathon 2025",
       date: "2025-09-15",
@@ -59,7 +61,9 @@ const Events = (loggedInUser) => {
       description: "A way for organizations to connect with one another",
       by: "Beta Phi",
     },
-  ];
+  ]);
+
+  const [myEvents, setMyEvents] = React.useState([]);
 
   const pastEvets = [
     {
@@ -239,18 +243,87 @@ const Events = (loggedInUser) => {
             <Typography variant="h6" gutterBottom>
               My Events
             </Typography>
-            <Typography variant="body2">
-              You have not registered for any events yet.
-            </Typography>
+            {myEvents.length === 0 && (
+              <Typography variant="body2">
+                You have not registered for any events yet.
+              </Typography>
+            )}
+            {myEvents.map((event, idx) => (
+              <Button
+                key={idx}
+                onClick={() => {
+                  setSelectedEvent(event);
+                  setModalOpen(true);
+                }}
+                sx={{
+                  width: "100%",
+                  textAlign: "left",
+                  mb: 2,
+                  p: 2,
+                  border: "1px solid #66faffff",
+                  borderRadius: 2,
+                  color: "black",
+                  backgroundColor: "transparent",
+                  boxShadow: 1,
+                  "&:hover": {
+                    backgroundColor: "#41b1c0ff",
+                    borderColor: "#66faffff",
+                  },
+                  display: "block",
+                }}
+              >
+                <Typography fontWeight={600} color="#66faffff">
+                  {event.title}
+                </Typography>
+                <Typography variant="body2">Date: {event.date}</Typography>
+                <Typography variant="body2">{event.description}</Typography>
+                <Typography variant="caption">By: {event.by}</Typography>
+              </Button>
+            ))}
           </Box>
         ) : (
           <Stack direction="column" mt={3} spacing={2}>
             <Typography variant="h6" gutterBottom>
               My Events
             </Typography>
-            <Typography variant="body2">
-              You have not created or registered for any events yet.
-            </Typography>
+            {myEvents.length === 0 && (
+              <Typography variant="body2">
+                You have not created or registered for any events yet.
+              </Typography>
+            )}
+
+            {myEvents.map((event, idx) => (
+              <Button
+                key={idx}
+                onClick={() => {
+                  setSelectedEvent(event);
+                  setModalOpen(true);
+                }}
+                sx={{
+                  width: "100%",
+                  textAlign: "left",
+                  mb: 2,
+                  p: 2,
+                  border: "1px solid #66faffff",
+                  borderRadius: 2,
+                  color: "black",
+                  backgroundColor: "transparent",
+                  boxShadow: 1,
+                  "&:hover": {
+                    backgroundColor: "#41b1c0ff",
+                    borderColor: "#66faffff",
+                  },
+                  display: "block",
+                }}
+              >
+                <Typography fontWeight={600} color="#66faffff">
+                  {event.title}
+                </Typography>
+                <Typography variant="body2">Date: {event.date}</Typography>
+                <Typography variant="body2">{event.description}</Typography>
+                <Typography variant="caption">By: {event.by}</Typography>
+              </Button>
+            ))}
             <Button
               mt={2}
               sx={{
@@ -258,12 +331,21 @@ const Events = (loggedInUser) => {
                 border: "1px solid black",
                 color: "black",
               }}
+              onClick={() => setOpen(true)}
             >
               Create an Event
             </Button>
           </Stack>
         )
       ) : null}
+  <CreateEventModal
+    open={open}
+    setOpen={setOpen}
+    upcomingEvents={upcomingEvents}
+    setUpcomingEvents={setUpcomingEvents}
+    myEvents={myEvents}
+    setMyEvents={setMyEvents}
+  />
       {!loggedInUser && eventTabs.length === 1 && (
         <Box mt={3}>
           <Typography color="error" fontWeight={600}>

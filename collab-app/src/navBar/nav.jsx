@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import SignUpLoginModal from "./SignUpLoginModal";
+import Events from "../pages/Events";
 import collabLogo from "../assets/collab.logo-1REAL.png";
 
 const NavBar = () => {
@@ -22,6 +23,7 @@ const NavBar = () => {
   const [signUp, setSignUp] = useState(false);
   const [openSignUpLoginModal, setOpenSignUpLoginModal] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const hap = false;
 
   const handleLoginClick = () => {
     setLogin(true);
@@ -144,6 +146,8 @@ const NavBar = () => {
           </Stack>
         </Toolbar>
       </Container>
+      {hap ? <Events loggedInUser={loggedInUser} /> : null}
+      
       <SignUpLoginModal
         open={openSignUpLoginModal}
         onClose={() => setOpenSignUpLoginModal(false)}
