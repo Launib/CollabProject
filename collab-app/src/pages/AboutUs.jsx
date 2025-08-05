@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import Footer from "./Footer";
 
 const AboutUs = () => {
   const contributors = [
@@ -35,6 +36,7 @@ const AboutUs = () => {
           </Typography>
         ))}
       </Stack>
+      <Footer />
     </Box>
   );
 };

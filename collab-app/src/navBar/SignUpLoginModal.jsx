@@ -38,6 +38,10 @@ const SignUpLoginModal = ({
       password === studentExampleAccount.password
     ) {
       setLoggedInUser(studentExampleAccount);
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify(studentExampleAccount)
+      );
       setEmail("");
       setPassword("");
       setOrganizationName("");
@@ -47,12 +51,17 @@ const SignUpLoginModal = ({
       setStudentAccount(false);
       setSignUp(false);
       setLogin(false);
+
       onClose();
     } else if (
       email === creatorExampleAccount.email &&
       password === creatorExampleAccount.password
     ) {
       setLoggedInUser(creatorExampleAccount);
+      localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify(creatorExampleAccount)
+      );
       setEmail("");
       setPassword("");
       setOrganizationName("");
@@ -151,64 +160,46 @@ const SignUpLoginModal = ({
               </Typography>
 
               <Stack direction="column" spacing={1.5} mt={1}>
-                <Box
+                <Button
                   sx={{
-                    p: "2px",
+                    backgroundColor: "transparent",
                     borderRadius: "3rem",
-                    background: "linear-gradient(90deg, #0c52ff, #5ce1e6)",
-                    display: "inline-block",
-                    mb: 1,
+                    color: "black",
+                    border: "1px solid black",
+                    width: "100%",
+                    height: "100%",
+                    boxShadow: "none",
+                    "&:hover": {
+                      backgroundColor: "#ADD8E6",
+                      color: "black",
+                    },
+                  }}
+                  onClick={() => setCreatorAccount(true)}
+                >
+                  Creator Account
+                </Button>
+
+                <Button
+                  sx={{
+                    backgroundColor: "transparent",
+                    border: "1px solid black",
+                    borderRadius: "3rem",
+                    color: "black",
+                    width: "100%",
+                    height: "100%",
+                    boxShadow: "none",
+                    "&:hover": {
+                      backgroundColor: "#ADD8E6",
+                      color: "black",
+                    },
+                  }}
+                  onClick={() => {
+                    setStudentAccount(true);
+                    setCreatorAccount(false);
                   }}
                 >
-                  <Button
-                    sx={{
-                      backgroundColor: "white",
-                      borderRadius: "3rem",
-                      color: "black",
-                      border: "none",
-                      width: "100%",
-                      height: "100%",
-                      boxShadow: "none",
-                      "&:hover": {
-                        backgroundColor: "#ADD8E6",
-                        color: "black",
-                      },
-                    }}
-                    onClick={() => setCreatorAccount(true)}
-                  >
-                    Creator Account
-                  </Button>
-                </Box>
-                <Box
-                  sx={{
-                    p: "2px",
-                    borderRadius: "3rem",
-                    background: "linear-gradient(90deg, #0c52ff, #5ce1e6)",
-                    display: "inline-block",
-                  }}
-                >
-                  <Button
-                    sx={{
-                      backgroundColor: "white",
-                      borderRadius: "3rem",
-                      color: "black",
-                      border: "none",
-                      width: "100%",
-                      height: "100%",
-                      boxShadow: "none",
-                      "&:hover": {
-                        backgroundColor: "#ADD8E6",
-                        color: "black",
-                      },
-                    }}
-                    onClick={() => {
-                      setStudentAccount(true);
-                      setCreatorAccount(false);
-                    }}
-                  >
-                    Student Account
-                  </Button>
-                </Box>
+                  Student Account
+                </Button>
               </Stack>
             </>
           )}
@@ -279,12 +270,18 @@ const SignUpLoginModal = ({
             />
             <Typography sx={{ fontSize: "0.9rem" }}>
               {" "}
-              Already Have An Account? <Button onClick={() => {
-                setSignUp(false);
-                setLogin(true);
-                setCreatorAccount(false);
-                setStudentAccount(false);
-              }}> Sign In</Button>
+              Already Have An Account?{" "}
+              <Button
+                onClick={() => {
+                  setSignUp(false);
+                  setLogin(true);
+                  setCreatorAccount(false);
+                  setStudentAccount(false);
+                }}
+              >
+                {" "}
+                Sign In
+              </Button>
             </Typography>
           </Stack>
         </>
@@ -359,12 +356,18 @@ const SignUpLoginModal = ({
 
             <Typography sx={{ fontSize: "0.9rem" }}>
               {" "}
-              Already Have An Account? <Button onClick={() => {
-                setSignUp(false);
-                setLogin(true);
-                setCreatorAccount(false);
-                setStudentAccount(false);
-              }}> Sign In</Button>
+              Already Have An Account?{" "}
+              <Button
+                onClick={() => {
+                  setSignUp(false);
+                  setLogin(true);
+                  setCreatorAccount(false);
+                  setStudentAccount(false);
+                }}
+              >
+                {" "}
+                Sign In
+              </Button>
             </Typography>
           </Stack>
         </>

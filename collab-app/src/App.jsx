@@ -6,6 +6,7 @@ import NavBar from './navBar/nav';
 import Events from './pages/Events';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
+import Footer from './pages/Footer';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact-us" element={<ContactUs />} />
       </Routes>
+      <Footer />
     </Router>
   );
 }

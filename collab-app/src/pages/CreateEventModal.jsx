@@ -12,6 +12,7 @@ const CreateEventModal = ({
   const [eventDate, setEventDate] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventOrganizer, setEventOrganizer] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
 
   const handleCreateEventClick = () => {
     setOpen(false);
@@ -20,6 +21,7 @@ const CreateEventModal = ({
       date: eventDate,
       description: eventDescription,
       by: eventOrganizer,
+      location: eventLocation,
     };
     setUpcomingEvents((prev) => [...prev, newEvent]);
     setMyEvents((prev) => [...prev, newEvent]);
@@ -81,6 +83,19 @@ const CreateEventModal = ({
         margin="normal"
         value={eventOrganizer}
         onChange={(e) => setEventOrganizer(e.target.value)}
+        sx={{
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "3rem",
+          },
+        }}
+      />
+      <TextField
+        label="Enter Event Location"
+        variant="outlined"
+        fullWidth
+        margin="normal"
+        value={eventLocation}
+        onChange={(e) => setEventLocation(e.target.value)}
         sx={{
           "& .MuiOutlinedInput-root": {
             borderRadius: "3rem",

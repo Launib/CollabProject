@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import {
   Typography,
   TextField,
@@ -6,6 +8,7 @@ import {
   Button,
   Stack,
 } from "@mui/material";
+import Footer from "./Footer";
 
 const ContactUs = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +16,20 @@ const ContactUs = () => {
   const [universityName, setUniversityName] = useState("");
   const [message, setMessage] = useState("");
   const [subject, setSubject] = useState("");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSnackbarOpen(true);
+    // You can add actual submit logic here
+    handleClear();
+  };
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
 
   const handleClear = () => {
     setEmail("");
@@ -24,7 +41,9 @@ const ContactUs = () => {
 
   return (
     <FormControl>
-      <Typography variant="h4" color="black">Contact Us</Typography>
+      <Typography variant="h4" color="black">
+        Contact Us
+      </Typography>
       <Typography variant="body1" color="black">
         We would love to hear from you! If you have any questions, suggestions,
         or feedback, please feel free to reach out to us.
@@ -96,13 +115,16 @@ const ContactUs = () => {
         sx={{
           "& .MuiOutlinedInput-root": {
             borderRadius: "3rem",
-            width: "350px",
+            width: "930px",
             height: "200px",
           },
         }}
       />
       <Stack direction="row" spacing={2} mt={2} justifyContent={"center"}>
-        <Button sx={{ border: "1px solid black", color: "black" }}>
+        <Button
+          sx={{ border: "1px solid black", color: "black" }}
+          onClick={handleSubmit}
+        >
           Submit
         </Button>
         <Button
@@ -112,6 +134,21 @@ const ContactUs = () => {
           Clear
         </Button>
       </Stack>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <MuiAlert
+          onClose={handleSnackbarClose}
+          severity="success"
+          sx={{ width: "100%" }}
+        >
+          Contact info submitted!
+        </MuiAlert>
+      </Snackbar>
+      <Footer />
     </FormControl>
   );
 };
